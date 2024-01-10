@@ -1,0 +1,47 @@
+{
+    "name": "invenso/doctrine-cleanup-migrations",
+    "description": "Invenso DoctrineCleanupMigrations Bundle",
+    "version": "1.0.0",
+    "license": "proprietary",
+    "require": {
+        "php": "^7.1 | ^8.0",
+        "symfony/config": "4.4.* | 5.4.* | ^6.0",
+        "symfony/console": "4.4.* | 5.4.* | ^6.0",
+        "symfony/dependency-injection": "4.4.* | 5.4.* | ^6.0",
+        "symfony/http-kernel": "4.4.* | 5.4.* | ^6.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Invenso\\DoctrineCleanupMigrations\\": "src/"
+        },
+        "exclude-from-classmap": [
+            "/Tests/"
+        ]
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Invenso\\DoctrineCleanupMigrations\\Tests\\": "tests/"
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "require-dev": {
+        "friendsofphp/php-cs-fixer": "^3.16",
+        "phpstan/phpstan": "^1.10"
+    },
+    "homepage": "https://www.invenso.nl",
+    "authors": [
+        {
+            "name": "Jeroen Aalders",
+            "email": "jeroen.aalders@invenso.nl"
+        }
+    ],
+    "support": {
+        "email": "info@invenso.nl"
+    },
+    "scripts": {
+        "php-cs-check": "php vendor/bin/php-cs-fixer fix -v --dry-run --diff src/",
+        "php-cs-fix": "php vendor/bin/php-cs-fixer fix -vvv src/",
+        "phpstan": "php vendor/bin/phpstan analyse -n --no-progress --error-format=table src/"
+    }
+}

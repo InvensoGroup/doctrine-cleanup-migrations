@@ -1,0 +1,12 @@
+services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+
+  Invenso\DoctrineCleanupMigrations\:
+    resource: "../../"
+    exclude:
+      - "../../InvensoDoctrineCleanupMigrationsBundle.php"
+      - "../../DependencyInjection/"
+      - "../../Services/"
+      - "../../Tests/"
