@@ -6,6 +6,7 @@ use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Output\BufferedOutput;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\Filesystem\Filesystem;
@@ -42,6 +43,25 @@ class ClearMigrationsCommand extends Command
         $application = $this->getApplication();
 
         if (null === $application) {
+            return -1;
+        }
+
+        $output->writeln('Checking for pending migrations first...');
+
+        $args = [
+          'command' => 'doctrine:migrations:status',
+        ];
+
+        $in = new ArrayInput($args);
+        $out = new BufferedOutput();
+        $returnCode = $application->doRun($in, $out);
+
+        $data = $this->getArrayFromString($out->fetch());
+
+        if ((int) $data['New Migrations'] >= 1) {
+            $output->writeln("You've got one or more pending migrations. Solve this issue first before running the command again.");
+            $output->writeln('Run php bin/console doctrine:migrations:status for more information');
+
             return -1;
         }
 
@@ -159,5 +179,32 @@ class ClearMigrationsCommand extends Command
         $differentiation = array_diff($rawData, ['..', '.']);
 
         return array_values($differentiation);
+    }
+
+    /**
+     * @param string $content
+     *
+     * @return array<string>
+     */
+    private function getArrayFromString(string $content)
+    {
+        // trim unwanted characters
+        $replaced = preg_replace("/[^A-Za-z0-9:\n ]/", '', $content);
+        $rawData = explode("\n", $replaced ?? '');
+        // create arrays to separate keys and values;
+        $keys = [];
+        $values = [];
+
+        foreach ($rawData as $data) {
+            if ('' !== $data) {
+                $dash = preg_replace('/[:]/', '-', $data, 1);
+                $exploded = explode('-', $dash ?? '');
+
+                array_push($keys, trim($exploded[0]));
+                isset($exploded[1]) ? array_push($values, trim($exploded[1])) : array_push($values, '');
+            }
+        }
+
+        return array_combine($keys, $values);
     }
 }
