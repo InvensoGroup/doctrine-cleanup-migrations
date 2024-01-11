@@ -6,12 +6,12 @@ This package is used to clean up your migrations locally by compressing it to on
 ### Installation
 To install this package run:
 ```shell
-$ composer require invenso/doctrine-cleanup-migrations
+composer require invenso/doctrine-cleanup-migrations
 ```
 ### Usage
 After installation run:
 ```shell
-$ php bin/console invenso:cleanup:migrations
+php bin/console invenso:cleanup:migrations
 ```
 and follow the logging closely.
 
@@ -20,7 +20,7 @@ Before deleting everything the cleanup script will check if there are still migr
 
 Run:
 ```shell
-$ php bin/console doctrine:migrations:status
+php bin/console doctrine:migrations:status
 ``` 
 To see more information about the pending versions.
 
@@ -30,5 +30,5 @@ After the cleanup you'll get the option to migrate your newly cleaned migrations
 You can also choose to run the migrations manually:
 
 ```shell
-$ php bin/console doctrine:migrations:migrate
+php bin/console doctrine:migrations:migrate
 ```
