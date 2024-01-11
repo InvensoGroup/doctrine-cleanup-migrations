@@ -4,8 +4,10 @@
 This package is used to clean up your migrations locally by compressing it to one file and deleting all references but the two newly created ones.
 
 ### Installation
-*TODO*
-
+To install this package run:
+```shell
+$ composer require invenso/doctrine-cleanup-migrations
+```
 ### Usage
 After installation run:
 ```shell
