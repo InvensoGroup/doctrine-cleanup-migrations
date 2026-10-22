@@ -49,7 +49,7 @@ class ClearMigrationsCommand extends Command
         $output->writeln('Checking for pending migrations first...');
 
         $args = [
-          'command' => 'doctrine:migrations:status',
+            'command' => 'doctrine:migrations:status',
         ];
 
         $in = new ArrayInput($args);
